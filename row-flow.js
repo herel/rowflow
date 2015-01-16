@@ -5,11 +5,11 @@
  * Email : herelss@hotmail.com
  * License: GPL2
  */
- jQuery.fn.extend({
+ $.fn.extend({
  	rowflow : function (options){
  		var opts = options;
  		return  this.each(function(e){
- 			var self = jQuery(this);
+ 			var self = $(this);
  			var defaults = {
  						columns 		: 2,
  						width			: 'auto',
@@ -19,18 +19,18 @@
  						responsive		: true,
  						breakPoint		: ['Small','ExtraSmall'] // indica donde no funciona en plugin
 						}
-			var options 	= jQuery.extend(defaults,opts);
- 			jQuery(window).bind('resize',loadscript);
- 			jQuery(window).load(loadscript);
+			var options 	= $.extend(defaults,opts);
+ 			$(window).bind('resize',loadscript);
+ 			$(window).load(loadscript);
  			function loadscript(){
  				var items_objs 	= [];
 				var columns  	= 0;
 				var item  		= 0;
 				var layout 		= 0;
 				if(options.responsive){
-					if(options.breakPoint.indexOf(findBootstrapEnvironment())){
+					if(options.breakPoint.indexOf(findBootstrapEnvironment())  == -1 ){
 						self.find(options.items).each(function(){
-							var el = jQuery(this);
+							var el = $(this);
 							items_objs.push({
 								w  : el.width(),
 								h: el.height(),
@@ -40,7 +40,7 @@
 							}
 							var left =  (item == 0 ) ?   0 : el.prev().width() + options.left_space  ;
 							var top  =  (columns == 0) ? 0 : items_objs[(columns*2)+item-1].h + options.bottom_space  ;
-							jQuery(this).css({
+							$(this).css({
 								position : 'absolute',
 								left     : left,
 								top 	 : top  
