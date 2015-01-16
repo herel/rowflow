@@ -15,7 +15,7 @@
  						width			: 'auto',
  						items   		: '.item',
  						left_space 		: 40,
- 						bottom_space 	: 100,
+ 						bottom_space 	: 30,
  						responsive		: true,
  						breakPoint		: ['Small','ExtraSmall'] // indica donde no funciona en plugin
 						}
@@ -30,16 +30,25 @@
 				if(options.responsive){
 					if(options.breakPoint.indexOf(findBootstrapEnvironment())  == -1 ){
 						self.find(options.items).each(function(){
+							console.log(columns);
 							var el = $(this);
 							items_objs.push({
+								objec : el ,
 								w  : el.width(),
 								h: el.height(),
 							});
 							if(item == 0){
-								layout = layout + el.height();
+								layout = layout + el.height() + options.bottom_space ;
 							}
+							var top_pos = 0;
+							if(columns > 1){
+								var new_obj = jQuery(items_objs[(columns*2)+item-2].objec);
+								top_pos =  new_obj.position().top + new_obj.height();
+							}
+							if(columns == 1)
+								top_pos = items_objs[(columns*2)+item-1].h ;
 							var left =  (item == 0 ) ?   0 : el.prev().width() + options.left_space  ;
-							var top  =  (columns == 0) ? 0 : items_objs[(columns*2)+item-1].h + options.bottom_space  ;
+							var top  =  (columns == 0) ? 0 :   top_pos + options.bottom_space  ;
 							$(this).css({
 								position : 'absolute',
 								left     : left,
